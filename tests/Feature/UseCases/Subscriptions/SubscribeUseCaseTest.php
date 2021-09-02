@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\UserCases\Subscriptions;
+namespace Tests\Feature\UseCases\Subscriptions;
 
 use App\Models\User;
 use App\Models\Workshop;
@@ -13,7 +13,7 @@ class SubscribeUseCaseTest extends TestCase
 {
   use RefreshDatabase;
   /**
-   * A basic feature test example.
+   *
    *
    * @return void
    */
@@ -25,7 +25,7 @@ class SubscribeUseCaseTest extends TestCase
     $subscribeService = new SubscribeUseCase();
     $subscribeService->execute($user->id, $workshop->id);
 
-    $this->assertEquals($user->subscriptions->count(), 1);
+    $this->assertEquals(1, $user->subscriptions->count());
   }
 
   public function test_subscribed_user_cant_subscribe_in_workshop()
@@ -37,7 +37,7 @@ class SubscribeUseCaseTest extends TestCase
     $subscribeService->execute($user->id, $workshop->id);
     $subscribeService->execute($user->id, $workshop->id);
 
-    $this->assertEquals($user->subscriptions->count(), 1);
+    $this->assertEquals(1, $user->subscriptions->count());
   }
 
   public function test_admin_cant_subscribe_in_workshop()
@@ -48,15 +48,6 @@ class SubscribeUseCaseTest extends TestCase
     $subscribeService = new SubscribeUseCase();
     $subscribeService->execute($user->id, $workshop->id);
 
-    $this->assertEquals($user->subscriptions->count(), 0);
-  }
-
-  public function test_user_can_unsubscribe_from_workshop()
-  {
-    $user = User::factory()->create();
-    $workshop = Workshop::factory()->create();
-
-    /* $subscribeService = new SubscribeUseCase();
-    $subscribeService->execute($user->id, $workshop->id); */
+    $this->assertEquals(0, $user->subscriptions->count());
   }
 }
